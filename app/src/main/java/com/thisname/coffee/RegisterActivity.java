@@ -1,5 +1,6 @@
 package com.thisname.coffee;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,7 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText mTextInputPasswordRegister;
     TextInputEditText mTextInputPasswordRegisterConfirmation;
     Button mBtnRegister;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
         mTextInputPasswordRegister = findViewById(R.id.textInputPasswordRegister);
         mTextInputPasswordRegisterConfirmation = findViewById(R.id.textInputPasswordRegisterConfirmation);
         mBtnRegister = findViewById(R.id.btnRegister);
+
+        mAuth = FirebaseAuth.getInstance();
 
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +67,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!userName.isEmpty() && !email.isEmpty() && !password.isEmpty() && !passwordConfirmation.isEmpty()){
             if (isEmailValid(email)){
-                Toast.makeText(this, "Email valido", Toast.LENGTH_LONG).show();
+                if(password.equals(passwordConfirmation)){
+                    if (password.length() >= 6){
+                        createUser(email,password);
+                    }else{
+                        Toast.makeText(this, "La contraseña deve tener al menos 6 caracteres", Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    Toast.makeText(this, "Las Contraseñas no coinciden", Toast.LENGTH_LONG).show();
+                }
+
             }else {
                 Toast.makeText(this, "Email Invalido", Toast.LENGTH_LONG).show();
             }
@@ -75,5 +92,18 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    public void createUser(String email,String password){
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(RegisterActivity.this, "registro correctamente", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(RegisterActivity.this, "No se realizo el registro", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }
