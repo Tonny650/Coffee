@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "33165854596",
+    "project_id": "coffeetalk-21dbc",
+    "storage_bucket": "coffeetalk-21dbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33165854596:android:be9da28282d8b25f617fd1",
+        "android_client_info": {
+          "package_name": "com.thisname.coffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33165854596-laos1o79af2tt5ausdovettqed82iu2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thisname.coffee",
+            "certificate_hash": "94c6685d01b42df67783a53c51375db993fff587"
+          }
+        },
+        {
+          "client_id": "33165854596-v22fc7hrt7a37fg5h5vp6g17cb3gqo5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBfA8dWe753_N2vaias2UUGEEOlhCfe-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33165854596-v22fc7hrt7a37fg5h5vp6g17cb3gqo5o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

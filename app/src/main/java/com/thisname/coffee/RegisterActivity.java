@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password = mTextInputPasswordRegister.getText().toString();
         String passwordConfirmation = mTextInputPasswordRegisterConfirmation.getText().toString();
 
-        if (!userName.isEmpty() && !email.isEmpty() && !password.isEmpty() && passwordConfirmation.isEmpty()){
+        if (!userName.isEmpty() && !email.isEmpty() && !password.isEmpty() && !passwordConfirmation.isEmpty()){
             if (isEmailValid(email)){
                 Toast.makeText(this, "Email valido", Toast.LENGTH_LONG).show();
             }else {
@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**check if an email is spelled correctly*/
     public boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
