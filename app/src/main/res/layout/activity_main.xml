@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:text="INICIAR SESION"
             android:background="@drawable/runded_button"
-            android:backgroundTint="#F80303"
+            android:backgroundTint="#A60000"
             android:textColor="@color/white"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

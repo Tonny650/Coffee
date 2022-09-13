@@ -13,7 +13,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText mTextInputPasswordRegisterConfirmation;
     Button mBtnRegister;
     FirebaseAuth mAuth;
+    FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,9 @@ public class RegisterActivity extends AppCompatActivity {
         mTextInputPasswordRegisterConfirmation = findViewById(R.id.textInputPasswordRegisterConfirmation);
         mBtnRegister = findViewById(R.id.btnRegister);
 
-        mAuth = FirebaseAuth.getInstance();
+        //base de datos
+        mAuth = FirebaseAuth.getInstance(); //Metodo de Autentificacion por "Email and Password" de FireBase.
+        mFirestore = FirebaseFirestore.getInstance(); //Intancia para trabajar con la base de datos.
 
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (isEmailValid(email)){
                 if(password.equals(passwordConfirmation)){
                     if (password.length() >= 6){
-                        createUser(email,password);
+                        createUser(userName,email,password);
                     }else{
                         Toast.makeText(this, "La contraseña deve tener al menos 6 caracteres", Toast.LENGTH_LONG).show();
                     }
@@ -94,12 +100,30 @@ public class RegisterActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public void createUser(String email,String password){
+    public void createUser(final String userName, final String email,final String password){
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "registro correctamente", Toast.LENGTH_LONG).show();
+                    String id = mAuth.getCurrentUser().getUid();
+                    Map<String,Object> map = new HashMap<>();
+
+                    map.put("username",userName);
+                    map.put("email",email);
+
+                    mFirestore.collection("Users").document(id).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (task.isSuccessful()){
+                                Toast.makeText(RegisterActivity.this, "registro correctamente", Toast.LENGTH_LONG).show();
+                            }else {
+                                Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    });
+
                 }else{
                     Toast.makeText(RegisterActivity.this, "No se realizo el registro", Toast.LENGTH_LONG).show();
                 }
