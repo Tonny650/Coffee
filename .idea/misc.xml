@@ -4,13 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/drawable/ic_email_grey.xml" value="0.3675" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/drawable/ic_home.xml" value="0.353" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/drawable/ic_password_grey.xml" value="0.3675" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/drawable/ic_person.xml" value="0.353" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/drawable/ic_usuario_grey.xml" value="0.3675" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/drawable/runded_button.xml" value="0.3315" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/activity_complet_profile.xml" value="0.3625" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/fragment_chat.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/fragment_filter.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Studio/Coffee/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

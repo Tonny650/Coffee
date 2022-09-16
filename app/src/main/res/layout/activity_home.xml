@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".activitys.HomeActivity">
 
-    <LinearLayout
+    <FrameLayout
+        android:background="@color/blackHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:id="@+id/container"
         >
 
-        <TextView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Home Activity"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="22dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/black"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/bottom_navigation_menu"
+            />
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
