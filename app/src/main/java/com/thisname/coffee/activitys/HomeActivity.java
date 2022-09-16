@@ -1,8 +1,10 @@
-package com.thisname.coffee;
+package com.thisname.coffee.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.thisname.coffee.R;
 
 public class HomeActivity extends AppCompatActivity {
 

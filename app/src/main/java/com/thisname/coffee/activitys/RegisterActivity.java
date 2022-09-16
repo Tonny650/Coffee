@@ -1,4 +1,4 @@
-package com.thisname.coffee;
+package com.thisname.coffee.activitys;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.thisname.coffee.R;
 
 import java.util.HashMap;
 import java.util.Map;

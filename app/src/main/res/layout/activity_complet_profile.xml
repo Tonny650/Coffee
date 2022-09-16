@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/portada"
-    tools:context=".RegisterActivity">
+    tools:context=".activitys.RegisterActivity">
 
     <View
         android:layout_width="match_parent"
