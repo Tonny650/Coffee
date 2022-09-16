@@ -1,8 +1,11 @@
 package com.thisname.coffee.activitys;
 
 import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,19 +23,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.thisname.coffee.R;
 import com.thisname.coffee.activitys.models.User;
 import com.thisname.coffee.activitys.providers.AuthProvider;
 import com.thisname.coffee.activitys.providers.UserProvider;
 
-import java.util.HashMap;
-import java.util.Map;
+import dmax.dialog.SpotsDialog;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     UserProvider userProvider;
     private GoogleSignInClient mGoogleSignInClient;
     private final int RS_SING_IN = 1;
+    AlertDialog alertDialog;
 
 
 
@@ -62,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
         mSignInButton = findViewById(R.id.btnLoginGoogle);
         userProvider = new UserProvider();
         mAuthProvider = new AuthProvider();
+
+        alertDialog = new SpotsDialog(this,"Loading...");
+
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
@@ -97,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
     private void login(){
         String email = mTextInputEmail.getText().toString();
         String password = mTextInputPassword.getText().toString();
+        alertDialog.show();
         mAuthProvider.login(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                alertDialog.dismiss();
                 if (task.isSuccessful()){
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
@@ -134,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        alertDialog.show();
         mAuthProvider.googleLogin(acct).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -142,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                             checkUserExist(id);
 
                         }else {
+                            alertDialog.dismiss();
                             Log.w("Error","error", task.getException());
                         }
                     }
@@ -155,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
 
+                    alertDialog.dismiss();
+
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
 
@@ -166,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     userProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            alertDialog.dismiss();
                             if (task.isSuccessful()){
                                 Intent intent = new Intent(MainActivity.this, CompletProfileActivity.class);
                                 startActivity(intent);
@@ -179,4 +190,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private class Builder {
+    }
 }

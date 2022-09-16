@@ -3,6 +3,7 @@ package com.thisname.coffee.activitys;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.thisname.coffee.activitys.providers.UserProvider;
 import java.util.HashMap;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class CompletProfileActivity extends AppCompatActivity {
 
 
@@ -29,6 +32,7 @@ public class CompletProfileActivity extends AppCompatActivity {
     Button mBtnRegister;
     AuthProvider mAuthProvider;
     UserProvider userProvider;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,8 @@ public class CompletProfileActivity extends AppCompatActivity {
 
         mTextInputUserName = findViewById(R.id.textInputUserNameRegister);
         mBtnRegister = findViewById(R.id.btnConfirm);
+
+        alertDialog = new SpotsDialog(this,"Loading...");
 
         //base de datos
         mAuthProvider = new AuthProvider();
@@ -70,10 +76,12 @@ public class CompletProfileActivity extends AppCompatActivity {
         String id = mAuthProvider.getUid();
         User user = new User();
         user.setId(id);
+        alertDialog.show();
         user.setUsername(userName);
         userProvider.update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                alertDialog.dismiss();
                 if (task.isSuccessful()){
                     Intent intent = new Intent(CompletProfileActivity.this, HomeActivity.class);
                     startActivity(intent);

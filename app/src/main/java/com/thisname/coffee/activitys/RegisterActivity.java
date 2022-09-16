@@ -3,6 +3,8 @@ package com.thisname.coffee.activitys;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -36,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button mBtnRegister;
     AuthProvider authProvider;
     UserProvider userProvider;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         authProvider = new AuthProvider();
         userProvider = new UserProvider();
+
+        alertDialog = new SpotsDialog(this,"Loading...");
 
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void createUser(final String userName, final String email,final String password){
+        alertDialog.show();
         authProvider.register(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -118,9 +125,11 @@ public class RegisterActivity extends AppCompatActivity {
                     userProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-
+                            alertDialog.dismiss();
                             if (task.isSuccessful()){
-                                Toast.makeText(RegisterActivity.this, "registro correctamente", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }else {
                                 Toast.makeText(RegisterActivity.this, "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
                             }
@@ -129,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
 
                 }else{
+                    alertDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "No se realizo el registro", Toast.LENGTH_LONG).show();
                 }
             }
