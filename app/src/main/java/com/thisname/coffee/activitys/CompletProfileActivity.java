@@ -15,6 +15,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.thisname.coffee.R;
+import com.thisname.coffee.activitys.models.User;
+import com.thisname.coffee.activitys.providers.AuthProvider;
+import com.thisname.coffee.activitys.providers.UserProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +27,8 @@ public class CompletProfileActivity extends AppCompatActivity {
 
     TextInputEditText mTextInputUserName;
     Button mBtnRegister;
-    FirebaseAuth mAuth;
-    FirebaseFirestore mFirestore;
+    AuthProvider mAuthProvider;
+    UserProvider userProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,8 @@ public class CompletProfileActivity extends AppCompatActivity {
         mBtnRegister = findViewById(R.id.btnConfirm);
 
         //base de datos
-        mAuth = FirebaseAuth.getInstance(); //Metodo de Autentificacion por "Email and Password" de FireBase.
-        mFirestore = FirebaseFirestore.getInstance(); //Intancia para trabajar con la base de datos.
+        mAuthProvider = new AuthProvider();
+        userProvider = new UserProvider();
 
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,11 +67,11 @@ public class CompletProfileActivity extends AppCompatActivity {
 
 
     public void updateUser(final String userName){
-        String id = mAuth.getCurrentUser().getUid();
-        Map<String,Object> map = new HashMap<>();
-        map.put("username",userName);
-
-        mFirestore.collection("Users").document(id).update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+        String id = mAuthProvider.getUid();
+        User user = new User();
+        user.setId(id);
+        user.setUsername(userName);
+        userProvider.update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
