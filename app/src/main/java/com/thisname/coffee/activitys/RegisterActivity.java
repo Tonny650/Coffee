@@ -140,7 +140,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     alertDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "No se realizo el registro", Toast.LENGTH_LONG).show();
-
                 }
             }
         });
