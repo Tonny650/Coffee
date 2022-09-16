@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Coffee"
         tools:targetApi="31">
         <activity
+            android:name=".activitys.PostActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitys.CompletProfileActivity"
             android:exported="false" />
         <activity
